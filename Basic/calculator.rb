@@ -15,9 +15,7 @@ loop do
 	puts "Enter the operations !"
 	choise = gets.chomp.downcase
 
-	if choise == 'q'
-		break;
-	end
+	break if choise == 'q'
 
 	if operations.key?(choise)
 		if current_result.nil?
