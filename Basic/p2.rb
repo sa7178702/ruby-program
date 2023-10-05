@@ -1,4 +1,5 @@
 # #Array Method.
+
 # .length
 # The .length method tallies the number of elements in your array and returns the count:
 
