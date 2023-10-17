@@ -40,7 +40,6 @@ class Calculator
 		  else
 		  	"Invalid"
 		  end
-		  # input
     else
       puts "Use the current result #{@current_result} as the second number? (y/n)"
       choice = gets.chomp.downcase
@@ -58,7 +57,6 @@ class Calculator
 	  else
 	  	"Invalid"
 	  end
-	  # input
   end
 
   def get_second_number
@@ -74,7 +72,6 @@ class Calculator
 	    when 'mul'
 	      num1 * num2
 	    when 'div'
-	      # num2.zero? ? (puts "Zero is not divisible"; nil) : num1 / num2
 	      remainder(num1,num2)
 	    end
 		puts "Total Result is : #{@current_result ? @current_result : 0} "
