@@ -1,3 +1,4 @@
+# require 'pry'
 class Calculator
   OPERATIONS = {
     'add' => '+',
@@ -20,7 +21,6 @@ class Calculator
         num1 = get_first_number
         num2 = get_second_number
         @current_result = calculate_result(choice, num1, num2)
-        check_integer_float_result
       else
         puts "Invalid operation. Please enter a valid one."
       end
@@ -32,50 +32,66 @@ class Calculator
   def get_first_number
     if @current_result.nil?
       puts "Enter the first number:"
-      gets.chomp.to_f
+      input = gets.chomp
+      if input.match?(/^\d+$/)
+		    input = input.to_i
+		  elsif input.match?(/^\d+\.\d+$/)
+		    input = input.to_f
+		  else
+		  	"Invalid"
+		  end
+		  # input
     else
       puts "Use the current result #{@current_result} as the second number? (y/n)"
       choice = gets.chomp.downcase
-      choice == 'y' ? @current_result : get_user_input("Enter the first number:").to_f
+      choice == 'y' ? @current_result : get_user_input("Enter the first number:")
     end
   end
 
   def get_user_input(prompt)
     puts prompt
-    gets.chomp
+    input = gets.chomp
+    if input.match?(/^\d+$/)
+	    input = input.to_i
+	  elsif input.match?(/^\d+\.\d+$/)
+	    input = input.to_f
+	  else
+	  	"Invalid"
+	  end
+	  # input
   end
 
   def get_second_number
-    get_user_input("Enter the second number:").to_f
+    get_user_input("Enter the second number:")
   end
 
   def calculate_result(operation, num1, num2)
-    case operation
-    when 'add'
-      num1 + num2
-    when 'sub'
-      num1 - num2
-    when 'mul'
-      num1 * num2
-    when 'div'
-      num2.zero? ? (puts "Zero is not divisible"; nil) : num1 / num2
-    end
+    @current_result = case operation
+	    when 'add'
+	      num1 + num2
+	    when 'sub'
+	      num1 - num2
+	    when 'mul'
+	      num1 * num2
+	    when 'div'
+	      # num2.zero? ? (puts "Zero is not divisible"; nil) : num1 / num2
+	      remainder(num1,num2)
+	    end
+		puts "Total Result is : #{@current_result ? @current_result : 0} "
+		@current_result
   end
 
-  def check_integer_float_result
-  	if @current_result.is_a?(Integer)
-	    puts "The result is a: #{@current_result}"
-	  elsif @current_result.is_a?(Float)
-	    puts "The result is a : #{@current_result}"
-	  else
-	    puts "The result is not a valid number."
-	  end
-	  @current_result
+  def remainder(num1,num2)
+  	if (num1 && num2 != 0)
+  		current_result = num1 / num2
+  		result = num1.remainder(num2)
+  		puts "Remainder is : #{result}"
+  		current_result
+  	else
+  		puts "Zero is not divisible"
+  	end
   end
 end
 
 calculator = Calculator.new
 calculator.calculate
-
-
-
